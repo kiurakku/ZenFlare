@@ -1,0 +1,18 @@
+{
+  "name": "zenflare",
+  "version": "0.1.0",
+  "private": true,
+  "description": "From first line to production. No noise, just flow.",
+  "scripts": {
+    "build": "pnpm -r run build --filter=./packages/*",
+    "dev": "pnpm -r run dev --parallel",
+    "lint": "pnpm -r run lint --filter=./packages/*"
+  },
+  "keywords": ["zenflare", "ide", "deploy", "observability", "developer-experience"],
+  "license": "MIT",
+  "repository": "https://github.com/kiurakku/ZenFlare",
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@9.0.0"
+}

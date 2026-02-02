@@ -1,0 +1,4 @@
+packages:
+  - "packages/ide-extension"
+  - "packages/deploy"
+  - "packages/observability"

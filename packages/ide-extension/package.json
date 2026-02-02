@@ -1,0 +1,36 @@
+{
+  "name": "@zenflare/ide-extension",
+  "version": "0.1.0",
+  "displayName": "ZenFlare",
+  "description": "ZenFlare VS Code / JetBrains: Zen zone, Flare (refactor), one flow.",
+  "publisher": "zenflare",
+  "main": "out/extension.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint src --ext .ts"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished"],
+  "contributes": {
+    "commands": [
+      { "command": "zenflare.toggleZenZone", "title": "ZenFlare: Toggle Zen Zone" },
+      { "command": "zenflare.showFlare", "title": "ZenFlare: Show Flare (refactor)" }
+    ],
+    "configuration": {
+      "title": "ZenFlare",
+      "properties": {
+        "zenflare.zenZone.enabled": { "type": "boolean", "default": true },
+        "zenflare.flare.complexityThreshold": { "type": "number", "default": 10 }
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {}
+}

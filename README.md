@@ -1,0 +1,113 @@
+<p align="center">
+  <img src="src/public/logo.jpeg" alt="ZenFlare" width="160" height="160" />
+</p>
+
+# ZenFlare
+
+**The single Cloud platform for "Full calm"**
+
+> **ZenFlare: From the first line to production. No noise, just flow.**  
+> You start in the IDE; one push takes you live; one message tells you when something breaks — one continuous flow, no tool overload.
+
+[Full slogan & taglines →](docs/SLOGAN.md)
+
+---
+
+ZenFlare is an **all-in-one** solution for developers: you don’t switch between tabs or drown in alerts and pipelines. You get a clean result in a calm, focused environment.
+
+Modern IT is overloaded: Jira, GitHub, Sentry, AWS, Slack… ZenFlare offers the opposite — **minimalism**. You get more than hosting; you get **developer peace of mind**.
+
+---
+
+## Three stages. One flow.
+
+### 1. **ZenFlare IDE Extension** — Writing stage
+
+You write code in **VS Code** or **JetBrains**.
+
+| What it does | What you see |
+|--------------|--------------|
+| **Zen zone** | The plugin doesn’t just underline errors. It dims all code except the function you’re working on — so nothing distracts. |
+| **Intelligent flare** | As soon as code gets complex (high cyclomatic complexity), a soft glow appears on the side. One click — and AI suggests a refactor so the code stays clean. |
+
+### 2. **ZenFlare Deploy** — Launch stage
+
+Code is ready. You **don’t** configure Dockerfiles or CI/CD pipelines.
+
+| What it does | What you see |
+|--------------|--------------|
+| **One click / one push** | From the IDE or via `git push`, the project goes straight to ZenFlare hosting. |
+| **Magic under the hood** | The system detects the framework, optimizes images and caching. You only see the “light pulse” animation — and the site is live. |
+
+### 3. **ZenFlare Observability** — Support stage
+
+After deploy, the real value kicks in. Instead of a flood of “Error 500” — one clear signal.
+
+| What it does | What you see |
+|--------------|--------------|
+| **One message instead of thousands of logs** | If something fails on the server, ZenFlare analyzes logs and sends **one** message to Slack/Telegram: *“Stay calm. The DB failed due to this request. Here’s a button to fix it.”* |
+| **Zen-Dashboard** | Server load isn’t chaotic graphs — it’s calm waves or “breathing” flames. Red flame = problem there. |
+
+---
+
+## Stack and repository
+
+- [Architecture →](ARCHITECTURE.md) · [Plans & roadmap →](docs/PLANS.md) · [Branding & icons →](docs/BRANDING.md)
+
+| Component | Description |
+|-----------|-------------|
+| `packages/ide-extension` | VS Code / JetBrains extension (Zen zone, Flare, refactoring) |
+| `packages/deploy` | Deploy service: framework detection, optimization, hosting |
+| `packages/observability` | Log aggregation, alerts, Zen-Dashboard |
+
+---
+
+## Quick start (in development)
+
+```bash
+# Clone
+git clone https://github.com/kiurakku/ZenFlare.git
+cd ZenFlare
+
+# Monorepo (after adding scripts)
+pnpm install
+pnpm build
+```
+
+Detailed instructions will appear in the [docs](docs/) once the API stabilizes.
+
+---
+
+## License and acknowledgments
+
+This project is distributed under the **[MIT License](LICENSE)**.
+
+ZenFlare was created with inspiration from:
+
+- **Cloud9** — for the cloud-based IDE concept and quiet developer experience.
+- **The ARS7 team** — for their contribution to the architecture and vision of the “full calm” platform.
+
+Details are in [LICENSE](LICENSE) and in [Credits](docs/CREDITS.md).
+
+---
+
+## Contributing
+
+We welcome contributors. Before sending a PR:
+
+- read [CONTRIBUTING.md](CONTRIBUTING.md);
+- follow the [Code of Conduct](CODE_OF_CONDUCT.md);
+- for security issues — [SECURITY.md](SECURITY.md).
+
+---
+
+## Contact
+
+- **Repository:** [github.com/kiurakku/ZenFlare](https://github.com/kiurakku/ZenFlare)
+- **Issues:** [GitHub Issues](https://github.com/kiurakku/ZenFlare/issues)
+
+---
+
+<p align="center">
+  <strong>ZenFlare</strong> — one flow from code to production. No noise.
+</p>
