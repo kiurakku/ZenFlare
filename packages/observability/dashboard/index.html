@@ -5,10 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Zen-Dashboard — ZenFlare</title>
   <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="color-scheme" content="dark" />
   <style>
+    html { background: #000 !important; }
     :root {
-      --bg: #0a0a0a;
-      --bg-soft: #111;
+      --bg: #000000;
+      --bg-soft: #0a0a0a;
       --text: #e5e5e5;
       --text-muted: rgba(255,255,255,0.6);
       --calm: rgba(255,255,255,0.15);
@@ -20,8 +23,9 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: var(--bg);
-      color: var(--text);
+      background: #000 !important;
+      background-color: var(--bg) !important;
+      color: var(--text) !important;
       font-family: system-ui, -apple-system, sans-serif;
       display: flex;
       flex-direction: column;

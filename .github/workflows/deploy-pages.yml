@@ -21,11 +21,14 @@ jobs:
 
       - name: Build site
         run: |
+          set -e
           mkdir -p build/dashboard build/assets/icons
-          cp site/index.html site/404.html build/
+          test -f site/index.html || (echo "Error: site/index.html missing" && exit 1)
+          cp site/index.html build/
+          test -f site/404.html && cp site/404.html build/ || true
           cp -r packages/observability/dashboard/* build/dashboard/
-          cp -r src/public/. build/assets/
-          cp -r assets/icons/. build/assets/icons/
+          test -d src/public && cp -r src/public/. build/assets/ || true
+          test -d assets/icons && cp -r assets/icons/. build/assets/icons/ || true
           ls -la build build/assets build/dashboard
 
       - name: Setup Pages
