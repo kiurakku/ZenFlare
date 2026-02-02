@@ -4,9 +4,9 @@
   "private": true,
   "description": "From first line to production. No noise, just flow.",
   "scripts": {
-    "build": "pnpm -r run build --filter=./packages/*",
+    "build": "pnpm -r run build",
     "dev": "pnpm -r run dev --parallel",
-    "lint": "pnpm -r run lint --filter=./packages/*"
+    "lint": "pnpm -r run lint"
   },
   "keywords": ["zenflare", "ide", "deploy", "observability", "developer-experience"],
   "license": "MIT",

@@ -1,10 +1,19 @@
 import * as vscode from "vscode";
 
 let zenZoneEnabled = true;
-let flareDecoration: vscode.TextEditorDecorationType | undefined;
+let dimDecorationType: vscode.TextEditorDecorationType | undefined;
+let flareDecorationType: vscode.TextEditorDecorationType | undefined;
 
 export function activate(context: vscode.ExtensionContext) {
-  // Zen Zone: dim everything except current function/block
+  dimDecorationType = vscode.window.createTextEditorDecorationType({
+    opacity: "0.35",
+  });
+  flareDecorationType = vscode.window.createTextEditorDecorationType({
+    backgroundColor: "rgba(255, 200, 100, 0.15)",
+    borderWidth: "0 0 0 3px",
+    borderColor: "rgba(255, 180, 80, 0.6)",
+  });
+
   const toggleZenZone = vscode.commands.registerCommand(
     "zenflare.toggleZenZone",
     () => {
@@ -16,7 +25,6 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  // Flare: show glow when complexity is high; on click → refactor
   const showFlare = vscode.commands.registerCommand(
     "zenflare.showFlare",
     () => {
@@ -27,8 +35,15 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(toggleZenZone, showFlare);
+  context.subscriptions.push({
+    dispose: () => {
+      dimDecorationType?.dispose();
+      flareDecorationType?.dispose();
+    },
+  });
 
   vscode.window.onDidChangeActiveTextEditor(updateZenZone);
+  vscode.window.onDidChangeTextEditorSelection((e) => updateZenZone(e.textEditor));
   vscode.workspace.onDidChangeTextDocument((e) => {
     if (vscode.window.activeTextEditor?.document === e.document) {
       updateZenZone(vscode.window.activeTextEditor);
@@ -41,31 +56,31 @@ export function activate(context: vscode.ExtensionContext) {
   updateZenZone(vscode.window.activeTextEditor);
 }
 
-function updateZenZone(editor: vscode.TextEditor | undefined) {
-  if (!editor || !zenZoneEnabled) {
-    clearZenZone(editor);
-    return;
-  }
+function getFocusRange(editor: vscode.TextEditor): vscode.Range {
   const doc = editor.document;
   const cursor = editor.selection.active;
   const line = doc.lineAt(cursor.line);
-  const range = new vscode.Range(line.range.start, line.range.end);
-  const dimRanges: vscode.Range[] = [];
-  for (let i = 0; i < doc.lineCount; i++) {
-    const r = doc.lineAt(i).range;
-    if (!range.intersection(r)) dimRanges.push(r);
-  }
-  editor.setDecorations(getDimDecoration(), dimRanges);
+  return new vscode.Range(line.range.start, line.range.end);
 }
 
-function getDimDecoration(): vscode.TextEditorDecorationType {
-  return vscode.window.createTextEditorDecorationType({
-    opacity: "0.35",
-  });
+function updateZenZone(editor: vscode.TextEditor | undefined) {
+  if (!editor || !zenZoneEnabled || !dimDecorationType) {
+    if (editor && dimDecorationType) {
+      editor.setDecorations(dimDecorationType, []);
+    }
+    return;
+  }
+  const focusRange = getFocusRange(editor);
+  const dimRanges: vscode.Range[] = [];
+  for (let i = 0; i < editor.document.lineCount; i++) {
+    const r = editor.document.lineAt(i).range;
+    if (!focusRange.intersection(r)) dimRanges.push(r);
+  }
+  editor.setDecorations(dimDecorationType, dimRanges);
 }
 
 function clearZenZone(editor: vscode.TextEditor | undefined) {
-  if (editor) editor.setDecorations(getDimDecoration(), []);
+  if (editor && dimDecorationType) editor.setDecorations(dimDecorationType, []);
 }
 
 function showFlareForSelection(editor: vscode.TextEditor) {
@@ -76,11 +91,15 @@ function showFlareForSelection(editor: vscode.TextEditor) {
     );
     return;
   }
+  if (flareDecorationType) {
+    editor.setDecorations(flareDecorationType, [range]);
+  }
   vscode.window.showInformationMessage(
-    "ZenFlare: Flare refactor (AI) will suggest a simpler version here. Coming soon."
+    "ZenFlare: Flare refactor (AI) will suggest a simpler version here. Use ZenFlare cloud for full refactor."
   );
 }
 
 export function deactivate() {
-  flareDecoration?.dispose();
+  dimDecorationType?.dispose();
+  flareDecorationType?.dispose();
 }

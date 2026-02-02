@@ -1,8 +1,12 @@
 <p align="center">
-  <img src="src/public/logo.jpeg" alt="ZenFlare" width="160" height="160" />
+  <img src="src/public/logo.png" alt="ZenFlare" width="160" height="160" />
 </p>
 
 # ZenFlare
+
+[![CI](https://github.com/kiurakku/ZenFlare/actions/workflows/ci.yml/badge.svg)](https://github.com/kiurakku/ZenFlare/actions/workflows/ci.yml)
+[![Deploy Zen-Dashboard](https://github.com/kiurakku/ZenFlare/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/kiurakku/ZenFlare/actions/workflows/deploy-pages.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 **The single Cloud platform for "Full calm"**
 
@@ -74,7 +78,7 @@ pnpm install
 pnpm build
 ```
 
-Detailed instructions will appear in the [docs](docs/) once the API stabilizes.
+**Zen-Dashboard** (calm waves / breathing flames) is deployed to **GitHub Pages** on every push to `main`. Enable Pages in repo **Settings → Pages → Source: GitHub Actions**. Live: `https://<user>.github.io/ZenFlare/`.
 
 ---
 
