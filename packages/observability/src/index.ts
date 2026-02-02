@@ -45,6 +45,9 @@ app.get("/api/dashboard/state", (_req: Request, res: Response) => {
 });
 
 const dashboardPath = path.join(__dirname, "..", "dashboard");
+const rootDir = path.join(__dirname, "..", "..", "..");
+app.use("/assets", express.static(path.join(rootDir, "src", "public")));
+app.use("/assets/icons", express.static(path.join(rootDir, "assets", "icons")));
 app.use("/dashboard", express.static(dashboardPath));
 app.get("/dashboard", (_req: Request, res: Response) => {
   res.sendFile(path.join(dashboardPath, "index.html"));

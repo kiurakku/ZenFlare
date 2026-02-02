@@ -1,4 +1,4 @@
-name: Deploy Zen-Dashboard to GitHub Pages
+name: Deploy ZenFlare site to GitHub Pages
 
 on:
   push:
@@ -19,13 +19,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Build site
+        run: |
+          mkdir -p build/dashboard build/assets/icons
+          cp site/index.html site/404.html build/
+          cp -r packages/observability/dashboard/* build/dashboard/
+          cp -r src/public/. build/assets/
+          cp -r assets/icons/. build/assets/icons/
+          ls -la build build/assets build/dashboard
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Upload Zen-Dashboard
-        uses: actions/upload-pages-artifact@3
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: packages/observability/dashboard
+          path: build
 
   deploy:
     needs: build

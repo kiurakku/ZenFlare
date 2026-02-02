@@ -15,15 +15,18 @@ ZenFlare Deploy — one push or one click; no Docker, no CI config. Framework de
 
 ---
 
-## Build & run
+## Build, test & run
 
 ```bash
 pnpm install
 pnpm build
+pnpm test
 pnpm start
 ```
 
 Dev: `pnpm dev` (ts-node-dev).
+
+- **Tests:** `src/detect.test.ts` — framework detection and build plan (Node `--test`).
 
 ---
 

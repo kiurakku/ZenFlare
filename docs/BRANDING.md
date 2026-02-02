@@ -6,10 +6,11 @@ Logo, icons, and visual identity for ZenFlare.
 
 ## Logo
 
-**Primary logo:** `src/public/logo.jpeg`
+**Primary logo:** `src/public/logo.png`
 
+- Additional assets: `Bg+logo.jpeg`, `bg1.jpg`, `bg2.jpg`, `bg3.jpg`, `phone+logo.jpg`, `vid/phone+logo.mp4` (hero, banners, video).
 - Cloud + star motif with motion/flare elements; white/gray on dark.
-- Use for: README, docs, app header, social preview.
+- Use for: README, site landing, Zen-Dashboard, docs, social preview.
 
 **Usage:**
 

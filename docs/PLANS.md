@@ -12,32 +12,33 @@ Planned milestones and priorities for the ZenFlare platform.
 
 ---
 
-## Phase 0 — Foundation (current)
+## Phase 0 — Foundation (done)
 
 - [x] Repo structure and monorepo layout
-- [x] README, ARCHITECTURE, SLOGAN, PLANS, CREDITS
+- [x] README, ARCHITECTURE, SLOGAN, PLANS, CREDITS, BRANDING, DEPLOY, TESTING
 - [x] Branding: logo, icons, BRANDING.md
-- [ ] LICENSE, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY
-- [ ] Package skeletons: `ide-extension`, `deploy`, `observability`
-- [ ] Shared config: TypeScript, ESLint, pnpm workspaces
+- [x] LICENSE, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY
+- [x] Package skeletons: `ide-extension`, `deploy`, `observability`
+- [x] TypeScript, pnpm workspaces, CI (build + test), deploy-pages
 
 ---
 
-## Phase 1 — IDE Extension (MVP)
+## Phase 1 — IDE Extension (MVP, in progress)
 
 **Target:** VS Code only first.
 
-- [ ] Zen zone: dim non-focused regions (current function/block by cursor)
-- [ ] Flare: compute cyclomatic complexity (e.g. per function), show glow when above threshold
+- [x] Zen zone: dim non-focused regions (current line by cursor)
+- [x] Flare: cyclomatic complexity module, show glow when above threshold (configurable)
+- [x] Commands: Toggle Zen Zone, Show Flare (selection); settings: zenZone.enabled, flare.complexityThreshold
+- [x] Unit tests: complexity (Node --test); launch config (F5)
 - [ ] Flare click: open refactor panel (local or API); apply diff
-- [ ] Settings: enable/disable Zen zone and Flare, complexity threshold
 - [ ] Icon and marketplace listing (ZenFlare branding)
 
 **Stretch:** JetBrains plugin skeleton.
 
 ---
 
-## Phase 2 — Deploy (MVP)
+## Phase 2 — Deploy (MVP, in progress)
 
 - [ ] Deploy API: receive webhook (e.g. GitHub push) or IDE “Deploy” request
 - [ ] Framework detection (e.g. Next, Vite, Nuxt, CRA) and build command
@@ -50,8 +51,10 @@ Planned milestones and priorities for the ZenFlare platform.
 
 ---
 
-## Phase 3 — Observability (MVP)
+## Phase 3 — Observability (MVP, in progress)
 
+- [x] API: `/ingest/logs`, `/alerts/summary`, `/api/dashboard/state`
+- [x] Zen-Dashboard: waves + breathing flames (calm/warning/problem); served at `/dashboard`; assets for local dev
 - [ ] Log ingestion (agent or SDK) from deployed apps
 - [ ] Error grouping and root-cause summary (e.g. “DB failed for query X”)
 - [ ] One-message alert to Slack/Telegram with link or fix action

@@ -1,5 +1,11 @@
 # ZenFlare — Deploy & CI/CD
 
+## Site (landing + Zen-Dashboard)
+
+- **Landing:** `site/index.html` — hero with logo, slogan, banners (`bg1.jpg`, `Bg+logo.jpeg`), video (`vid/phone+logo.mp4`), CTA to Zen-Dashboard and GitHub.
+- **Zen-Dashboard:** `packages/observability/dashboard/` — waves + breathing flames; design matches logo (dark `#0a0a0a`, flare accents).
+- **Assets:** `src/public/` (logo, banners, video) and `assets/icons/` (favicon, flare) are copied into the deployed site.
+
 ## CI (build)
 
 - **Workflow:** [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)

@@ -18,7 +18,7 @@ Thank you for considering contributing. ZenFlare follows the slogan: *From first
 2. **Branch** from `main` (e.g. `feature/zen-zone`, `fix/deploy-webhook`).
 3. **Setup:** From repo root, run `pnpm install` (see [README](README.md) when scripts are added).
 4. **Code** in the relevant package: `packages/ide-extension`, `packages/deploy`, or `packages/observability`.
-5. **Test** and lint (commands will be documented in each package).
+5. **Test** and lint: `pnpm build`, `pnpm test`, `pnpm lint` (from root). See [docs/TESTING.md](docs/TESTING.md).
 6. **Commit** with clear messages (e.g. "feat(ide): add Zen zone dimming").
 7. **Push** and open a **Pull Request** against `main`.
 

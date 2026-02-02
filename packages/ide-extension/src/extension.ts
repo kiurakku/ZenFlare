@@ -1,8 +1,10 @@
 import * as vscode from "vscode";
+import { cyclomaticComplexity, getComplexityLabel } from "./complexity";
 
 let zenZoneEnabled = true;
 let dimDecorationType: vscode.TextEditorDecorationType | undefined;
 let flareDecorationType: vscode.TextEditorDecorationType | undefined;
+let lastFlareRanges: vscode.Range[] = [];
 
 export function activate(context: vscode.ExtensionContext) {
   dimDecorationType = vscode.window.createTextEditorDecorationType({
@@ -42,11 +44,19 @@ export function activate(context: vscode.ExtensionContext) {
     },
   });
 
-  vscode.window.onDidChangeActiveTextEditor(updateZenZone);
-  vscode.window.onDidChangeTextEditorSelection((e) => updateZenZone(e.textEditor));
+  vscode.window.onDidChangeActiveTextEditor((editor) => {
+    updateZenZone(editor);
+    updateFlare(editor);
+  });
+  vscode.window.onDidChangeTextEditorSelection((e) => {
+    updateZenZone(e.textEditor);
+    updateFlare(e.textEditor);
+  });
   vscode.workspace.onDidChangeTextDocument((e) => {
-    if (vscode.window.activeTextEditor?.document === e.document) {
-      updateZenZone(vscode.window.activeTextEditor);
+    const editor = vscode.window.activeTextEditor;
+    if (editor?.document === e.document) {
+      updateZenZone(editor);
+      updateFlare(editor);
     }
   });
 
@@ -54,6 +64,7 @@ export function activate(context: vscode.ExtensionContext) {
   zenZoneEnabled = config.get<boolean>("zenZone.enabled", true);
 
   updateZenZone(vscode.window.activeTextEditor);
+  updateFlare(vscode.window.activeTextEditor);
 }
 
 function getFocusRange(editor: vscode.TextEditor): vscode.Range {
@@ -65,9 +76,7 @@ function getFocusRange(editor: vscode.TextEditor): vscode.Range {
 
 function updateZenZone(editor: vscode.TextEditor | undefined) {
   if (!editor || !zenZoneEnabled || !dimDecorationType) {
-    if (editor && dimDecorationType) {
-      editor.setDecorations(dimDecorationType, []);
-    }
+    if (editor && dimDecorationType) editor.setDecorations(dimDecorationType, []);
     return;
   }
   const focusRange = getFocusRange(editor);
@@ -79,8 +88,34 @@ function updateZenZone(editor: vscode.TextEditor | undefined) {
   editor.setDecorations(dimDecorationType, dimRanges);
 }
 
-function clearZenZone(editor: vscode.TextEditor | undefined) {
-  if (editor && dimDecorationType) editor.setDecorations(dimDecorationType, []);
+function getCurrentBlockText(editor: vscode.TextEditor): string {
+  const doc = editor.document;
+  const cursor = editor.selection.active;
+  const line = doc.lineAt(cursor.line);
+  const start = Math.max(0, cursor.line - 50);
+  const end = Math.min(doc.lineCount - 1, cursor.line + 50);
+  const range = new vscode.Range(
+    doc.lineAt(start).range.start,
+    doc.lineAt(end).range.end
+  );
+  return doc.getText(range);
+}
+
+function updateFlare(editor: vscode.TextEditor | undefined) {
+  if (!editor || !flareDecorationType) return;
+  const config = vscode.workspace.getConfiguration("zenflare");
+  const threshold = config.get<number>("flare.complexityThreshold", 10);
+  const text = getCurrentBlockText(editor);
+  const complexity = cyclomaticComplexity(text);
+  const label = getComplexityLabel(complexity, threshold);
+  if (label === "flare") {
+    const line = editor.document.lineAt(editor.selection.active.line);
+    lastFlareRanges = [line.range];
+    editor.setDecorations(flareDecorationType, lastFlareRanges);
+  } else {
+    lastFlareRanges = [];
+    editor.setDecorations(flareDecorationType, []);
+  }
 }
 
 function showFlareForSelection(editor: vscode.TextEditor) {
@@ -91,12 +126,18 @@ function showFlareForSelection(editor: vscode.TextEditor) {
     );
     return;
   }
+  const text = editor.document.getText(range);
+  const complexity = cyclomaticComplexity(text);
+  const config = vscode.workspace.getConfiguration("zenflare");
+  const threshold = config.get<number>("flare.complexityThreshold", 10);
   if (flareDecorationType) {
     editor.setDecorations(flareDecorationType, [range]);
   }
-  vscode.window.showInformationMessage(
-    "ZenFlare: Flare refactor (AI) will suggest a simpler version here. Use ZenFlare cloud for full refactor."
-  );
+  const msg =
+    complexity >= threshold
+      ? `ZenFlare: Complexity ${complexity} (≥${threshold}). Consider refactoring. Use ZenFlare cloud for AI suggestion.`
+      : `ZenFlare: Complexity ${complexity}. Select complex code and run again for refactor hint.`;
+  vscode.window.showInformationMessage(msg);
 }
 
 export function deactivate() {

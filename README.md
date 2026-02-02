@@ -73,12 +73,17 @@ After deploy, the real value kicks in. Instead of a flood of “Error 500” —
 git clone https://github.com/kiurakku/ZenFlare.git
 cd ZenFlare
 
-# Monorepo (after adding scripts)
 pnpm install
 pnpm build
+pnpm test
 ```
 
-**Zen-Dashboard** (calm waves / breathing flames) is deployed to **GitHub Pages** on every push to `main`. Enable Pages in repo **Settings → Pages → Source: GitHub Actions**. Live: `https://<user>.github.io/ZenFlare/`.
+- **IDE Extension:** Open repo in VS Code, press **F5** (Run → Run ZenFlare Extension) or run from `.vscode/launch.json`.
+- **Deploy API:** `cd packages/deploy && pnpm start` (port 4000).
+- **Observability + Zen-Dashboard:** `cd packages/observability && pnpm start` (port 5000, `/dashboard`).
+- **Tests:** `pnpm test` runs unit tests for `ide-extension` (complexity) and `deploy` (framework detection). See [docs/TESTING.md](docs/TESTING.md).
+
+**Site** (landing + Zen-Dashboard) is deployed to **GitHub Pages** on every push to `main`: landing with logo, banners (`bg1`, `Bg+logo`, `phone+logo`), video (`vid/phone+logo.mp4`), and Zen-Dashboard (waves + breathing flames). Enable Pages in **Settings → Pages → Source: GitHub Actions**. Live: `https://<user>.github.io/ZenFlare/`.
 
 ---
 

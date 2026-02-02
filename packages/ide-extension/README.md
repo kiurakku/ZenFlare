@@ -25,14 +25,17 @@ ZenFlare IDE Extension — **Zen zone** and **Flare** inside VS Code (and later 
 
 ---
 
-## Build
+## Build & test
 
 ```bash
 pnpm install
 pnpm build
+pnpm test
 ```
 
-Then run from VS Code: F5 (Run Extension). Or package and install the VSIX.
+Then run from VS Code: **F5** (Run → Run ZenFlare Extension) or use `.vscode/launch.json`. Or package and install the VSIX.
+
+- **Tests:** `src/complexity.test.ts` — cyclomatic complexity and label (Node `--test`).
 
 ---
 

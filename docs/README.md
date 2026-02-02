@@ -21,6 +21,7 @@ Central docs for the ZenFlare platform. All text in English.
 | [ARCHITECTURE.md](../ARCHITECTURE.md) | High-level architecture (IDE, Deploy, Observability) |
 | [PLANS.md](PLANS.md) | Roadmap, phases, priorities |
 | [DEPLOY.md](DEPLOY.md) | CI/CD, GitHub Pages, local run |
+| [TESTING.md](TESTING.md) | Unit tests, CI, per-package |
 
 ---
 

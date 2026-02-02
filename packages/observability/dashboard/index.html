@@ -3,37 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ZenFlare — Zen-Dashboard</title>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>Zen-Dashboard — ZenFlare</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg" />
   <style>
     :root {
       --bg: #0a0a0a;
+      --bg-soft: #111;
+      --text: #e5e5e5;
+      --text-muted: rgba(255,255,255,0.6);
       --calm: rgba(255,255,255,0.15);
       --warning: rgba(255, 180, 80, 0.6);
       --problem: rgba(255, 80, 80, 0.8);
+      --flare-glow: rgba(255,200,120,0.2);
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       min-height: 100vh;
       background: var(--bg);
-      color: #e5e5e5;
+      color: var(--text);
       font-family: system-ui, -apple-system, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       padding: 2rem;
     }
-    h1 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
     }
+    .header img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
+    .header h1 { font-size: 1.5rem; margin: 0; }
     .tagline {
       font-size: 0.875rem;
-      opacity: 0.7;
-      margin-bottom: 2rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
     }
     .servers {
       display: flex;
@@ -42,17 +52,18 @@
       justify-content: center;
     }
     .server {
-      width: 140px;
-      padding: 1rem;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.05);
+      width: 160px;
+      padding: 1.25rem;
+      border-radius: 14px;
+      background: var(--bg-soft);
       border: 1px solid rgba(255,255,255,0.08);
       text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     }
     .server .name { font-weight: 600; margin-bottom: 0.5rem; }
     .flame {
-      width: 48px;
-      height: 64px;
+      width: 52px;
+      height: 68px;
       margin: 0.5rem auto;
       border-radius: 50% 50% 45% 45%;
       animation: breathe 2.5s ease-in-out infinite;
@@ -75,9 +86,18 @@
     }
     .load {
       font-size: 0.75rem;
-      opacity: 0.8;
+      color: var(--text-muted);
       margin-top: 0.25rem;
     }
+    .back {
+      margin-top: 2rem;
+    }
+    .back a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
+    .back a:hover { color: var(--text); }
     .waves {
       position: fixed;
       bottom: 0;
@@ -85,7 +105,7 @@
       right: 0;
       height: 120px;
       pointer-events: none;
-      opacity: 0.2;
+      opacity: 0.15;
     }
     .wave {
       position: absolute;
@@ -105,19 +125,33 @@
   </style>
 </head>
 <body>
-  <h1>ZenFlare</h1>
-  <p class="tagline">From first line to production. No noise, just flow.</p>
+  <div class="header">
+    <img src="../assets/logo.png" alt="ZenFlare" id="logo" />
+    <div>
+      <h1>Zen-Dashboard</h1>
+      <p class="tagline">From first line to production. No noise, just flow.</p>
+    </div>
+  </div>
   <div class="servers" id="servers"></div>
+  <div class="back">
+    <a href="../">← Back to ZenFlare</a>
+  </div>
   <div class="waves">
     <div class="wave"></div>
     <div class="wave"></div>
   </div>
   <script>
     const statusClass = (s) => s === "calm" ? "calm" : s === "warning" ? "warning" : "problem";
+    const base = (() => {
+      const p = window.location.pathname;
+      if (p.includes("/ZenFlare/")) return "/ZenFlare";
+      return "";
+    })();
+    const logo = document.getElementById("logo");
+    logo.onerror = () => { logo.style.display = "none"; };
     async function load() {
       try {
-        const apiBase = window.location.pathname.startsWith("/dashboard") ? window.location.pathname.replace(/\/dashboard.*/, "") : "";
-        const r = await fetch(apiBase + "/api/dashboard/state");
+        const r = await fetch(base + "/api/dashboard/state");
         const data = await r.json();
         document.getElementById("servers").innerHTML = data.servers.map(s => `
           <div class="server">
@@ -129,14 +163,19 @@
       } catch (e) {
         document.getElementById("servers").innerHTML = `
           <div class="server">
-            <div class="name">Demo</div>
+            <div class="name">API</div>
             <div class="flame calm"></div>
             <div class="load">30%</div>
           </div>
           <div class="server">
-            <div class="name">Demo</div>
+            <div class="name">Worker</div>
             <div class="flame warning"></div>
             <div class="load">80%</div>
+          </div>
+          <div class="server">
+            <div class="name">DB</div>
+            <div class="flame calm"></div>
+            <div class="load">50%</div>
           </div>
         `;
       }

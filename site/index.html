@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZenFlare — From first line to production. No noise, just flow.</title>
+  <meta name="description" content="ZenFlare: the single Cloud platform for full calm. IDE extension, one-push deploy, one-message observability." />
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg-soft: #111;
+      --text: #e5e5e5;
+      --text-muted: rgba(255,255,255,0.6);
+      --flare: rgba(255,255,255,0.12);
+      --flare-glow: rgba(255,200,120,0.25);
+      --accent: #f5b84a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.6;
+    }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: var(--bg) url('assets/bg1.jpg') center/cover no-repeat;
+      opacity: 0.35;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, var(--bg) 70%);
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 640px; }
+    .hero-logo {
+      width: 160px;
+      height: 160px;
+      margin: 0 auto 1.5rem;
+      border-radius: 24px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 24px var(--flare-glow));
+    }
+    .hero h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .hero .tagline {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .hero .slogan {
+      font-size: 0.95rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 2rem;
+    }
+    .cta {
+      display: inline-flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,184,74,0.35); }
+    .btn-secondary {
+      background: var(--flare);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.18); }
+    section {
+      padding: 4rem 2rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    section p { color: var(--text-muted); text-align: center; }
+    .banner-section {
+      background: var(--bg-soft);
+      padding: 3rem 2rem;
+    }
+    .banner-img {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      display: block;
+      border-radius: 16px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    }
+    .video-wrap {
+      max-width: 560px;
+      margin: 2rem auto;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    }
+    .video-wrap video {
+      width: 100%;
+      display: block;
+    }
+    .three-cols {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .three-cols .card {
+      background: var(--flare);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .three-cols .card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .three-cols .card p { font-size: 0.9rem; text-align: center; margin: 0; }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <img src="assets/logo.png" alt="ZenFlare" class="hero-logo" width="160" height="160" />
+      <h1>ZenFlare</h1>
+      <p class="tagline">The single Cloud platform for "Full calm"</p>
+      <p class="slogan">From first line to production. No noise, just flow.</p>
+      <div class="cta">
+        <a href="dashboard/" class="btn btn-primary">Open Zen-Dashboard</a>
+        <a href="https://github.com/kiurakku/ZenFlare" class="btn btn-secondary" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2>Three stages. One flow.</h2>
+    <p>IDE extension → Deploy → Observability. No tabs, no noise.</p>
+    <div class="three-cols">
+      <div class="card">
+        <h3>Zen Zone & Flare</h3>
+        <p>Focus on one function; AI refactor when complexity spikes.</p>
+      </div>
+      <div class="card">
+        <h3>One push</h3>
+        <p>No Docker, no pipeline. Framework detected, site live.</p>
+      </div>
+      <div class="card">
+        <h3>One message</h3>
+        <p>One alert instead of a thousand logs. Calm dashboard.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="banner-section">
+    <h2>ZenFlare in action</h2>
+    <img src="assets/Bg+logo.jpeg" alt="ZenFlare" class="banner-img" />
+  </section>
+
+  <section>
+    <h2>From first line to production</h2>
+    <p>See the flow: code, deploy, observe — one calm experience.</p>
+    <div class="video-wrap">
+      <video src="assets/vid/phone+logo.mp4" controls playsinline muted loop></video>
+    </div>
+  </section>
+
+  <section class="banner-section">
+    <img src="assets/phone+logo.jpg" alt="ZenFlare" class="banner-img" />
+  </section>
+
+  <footer>
+    <p><strong>ZenFlare</strong> — one flow from code to production. No noise.</p>
+    <p><a href="https://github.com/kiurakku/ZenFlare">Repository</a> · <a href="dashboard/">Zen-Dashboard</a></p>
+  </footer>
+</body>
+</html>
