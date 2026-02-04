@@ -5,6 +5,7 @@
  */
 
 import express, { Request, Response } from "express";
+import path from "path";
 import { detectFramework, getBuildPlan } from "./detect";
 
 const app = express();
@@ -21,6 +22,7 @@ interface DeployJob {
   framework?: string;
   createdAt: number;
   completedAt?: number;
+  outputUrl?: string;
 }
 
 const jobs = new Map<string, DeployJob>();
@@ -42,6 +44,8 @@ function createJob(repo?: string, branch?: string): DeployJob {
       setTimeout(() => {
         j.status = "done";
         j.completedAt = Date.now();
+        // For now we host a static demo artifact at /project/demo.
+        j.outputUrl = "/project/demo";
       }, 1500);
     }
   }, 100);
@@ -50,6 +54,14 @@ function createJob(repo?: string, branch?: string): DeployJob {
 
 app.get("/health", (_req: Request, res: Response) => {
   res.json({ status: "ok", service: "zenflare-deploy" });
+});
+
+// Minimal static hosting layer for demo deployments.
+const rootDir = path.join(__dirname, "..", "..", "..");
+const demoStaticDir = path.join(rootDir, "packages", "deploy", "demo-static");
+app.use("/project/demo", express.static(demoStaticDir));
+app.get("/project/demo", (_req: Request, res: Response) => {
+  res.sendFile(path.join(demoStaticDir, "index.html"));
 });
 
 app.post("/webhook/deploy", (req: Request, res: Response) => {
@@ -101,6 +113,7 @@ app.get("/api/deploy/:jobId", (req: Request, res: Response) => {
     createdAt: job.createdAt,
     completedAt: job.completedAt,
     lightPulse: job.status === "done",
+    previewUrl: job.outputUrl,
   });
 });
 

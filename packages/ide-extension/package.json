@@ -25,6 +25,11 @@
       "title": "ZenFlare",
       "properties": {
         "zenflare.zenZone.enabled": { "type": "boolean", "default": true },
+        "zenflare.zenZone.dimOpacity": {
+          "type": "string",
+          "default": "0.35",
+          "description": "Opacity for non-focused lines in Zen Zone (0–1, e.g. 0.2, 0.35, 0.5)."
+        },
         "zenflare.flare.complexityThreshold": { "type": "number", "default": 10 }
       }
     }

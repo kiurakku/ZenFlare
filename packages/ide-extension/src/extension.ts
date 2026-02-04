@@ -7,8 +7,12 @@ let flareDecorationType: vscode.TextEditorDecorationType | undefined;
 let lastFlareRanges: vscode.Range[] = [];
 
 export function activate(context: vscode.ExtensionContext) {
+  const config = vscode.workspace.getConfiguration("zenflare");
+  zenZoneEnabled = config.get<boolean>("zenZone.enabled", true);
+  const dimOpacity = config.get<string>("zenZone.dimOpacity", "0.35");
+
   dimDecorationType = vscode.window.createTextEditorDecorationType({
-    opacity: "0.35",
+    opacity: dimOpacity,
   });
   flareDecorationType = vscode.window.createTextEditorDecorationType({
     backgroundColor: "rgba(255, 200, 100, 0.15)",
@@ -59,9 +63,6 @@ export function activate(context: vscode.ExtensionContext) {
       updateFlare(editor);
     }
   });
-
-  const config = vscode.workspace.getConfiguration("zenflare");
-  zenZoneEnabled = config.get<boolean>("zenZone.enabled", true);
 
   updateZenZone(vscode.window.activeTextEditor);
   updateFlare(vscode.window.activeTextEditor);
@@ -133,11 +134,79 @@ function showFlareForSelection(editor: vscode.TextEditor) {
   if (flareDecorationType) {
     editor.setDecorations(flareDecorationType, [range]);
   }
-  const msg =
-    complexity >= threshold
-      ? `ZenFlare: Complexity ${complexity} (≥${threshold}). Consider refactoring. Use ZenFlare cloud for AI suggestion.`
-      : `ZenFlare: Complexity ${complexity}. Select complex code and run again for refactor hint.`;
-  vscode.window.showInformationMessage(msg);
+  if (complexity >= threshold) {
+    vscode.window
+      .showInformationMessage(
+        `ZenFlare: Complexity ${complexity} (≥${threshold}). Opening refactor suggestions...`
+      )
+      .then(() => {
+        showRefactorPanel(editor, range, complexity, threshold);
+      });
+  } else {
+    vscode.window.showInformationMessage(
+      `ZenFlare: Complexity ${complexity}. Select more complex code to see refactor suggestions.`
+    );
+  }
+}
+
+async function showRefactorPanel(
+  editor: vscode.TextEditor,
+  range: vscode.Range,
+  complexity: number,
+  threshold: number
+) {
+  type RefactorAction = {
+    label: string;
+    description: string;
+    action: "addTodo" | "extractFunction";
+  };
+
+  const items: (RefactorAction & vscode.QuickPickItem)[] = [
+    {
+      label: "Add TODO comment",
+      description: "Mark this block for future refactor.",
+      detail: `Complexity ${complexity} (≥${threshold})`,
+      action: "addTodo",
+    },
+    {
+      label: "Extract to function",
+      description: "Wrap the selected block into a helper function.",
+      detail: `Complexity ${complexity} (≥${threshold})`,
+      action: "extractFunction",
+    },
+  ];
+
+  const picked = await vscode.window.showQuickPick(items, {
+    title: "ZenFlare refactor suggestions",
+    placeHolder: "Choose a refactor action or press ESC to cancel",
+  });
+
+  if (!picked) {
+    return;
+  }
+
+  const edit = new vscode.WorkspaceEdit();
+  const doc = editor.document;
+
+  if (picked.action === "addTodo") {
+    const indent =
+      doc.lineAt(range.start.line).firstNonWhitespaceCharacterIndex;
+    const indentStr = " ".repeat(indent);
+    edit.insert(
+      doc.uri,
+      range.start,
+      `${indentStr}// TODO(ZenFlare): consider extracting this block into a separate function\n`
+    );
+  } else if (picked.action === "extractFunction") {
+    const funcName = "extractedZenFlareBlock";
+    edit.insert(doc.uri, range.start, `function ${funcName}() {\n`);
+    edit.insert(doc.uri, range.end, `\n}\n`);
+  }
+
+  await vscode.workspace.applyEdit(edit);
+  vscode.window.showInformationMessage(
+    "ZenFlare: Refactor suggestion applied."
+  );
 }
 
 export function deactivate() {

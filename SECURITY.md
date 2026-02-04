@@ -26,6 +26,7 @@ ZenFlare takes security seriously. If you believe you have found a vulnerability
 
 - Third-party services we integrate with (report to them).
 - General configuration or usage questions (use Issues or Discussions).
+- Local demo-only instances (e.g. `/project/demo`, local `/ingest/logs` / `/api/deploy` without auth) that are not exposed to the public internet.
 
 ---
 

@@ -10,7 +10,7 @@
 
 - **Workflow:** [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)
 - **Triggers:** Push and pull requests to `main` / `master`
-- **Steps:** Checkout → pnpm (версія з `packageManager` у `package.json`) → Node 20 → `pnpm install` → `pnpm build` → `pnpm test`
+- **Steps:** Checkout → pnpm (версія з `packageManager` у `package.json`) → Node 20 → `pnpm install` → `pnpm lint` → `pnpm build` → `pnpm test`
 - **Badge:** [![CI](https://github.com/kiurakku/ZenFlare/actions/workflows/ci.yml/badge.svg)](https://github.com/kiurakku/ZenFlare/actions/workflows/ci.yml)
 
 ## Deploy Zen-Dashboard to GitHub Pages
@@ -30,11 +30,14 @@
 ```bash
 pnpm install
 pnpm build
-# Deploy API
+# Deploy API (port 4000)
 cd packages/deploy && pnpm start
-# Observability + Zen-Dashboard
+
+# Observability API + Zen-Dashboard (port 5000)
 cd packages/observability && pnpm start
-# Open http://localhost:5000/dashboard
+
+# Open dashboard
+# http://localhost:5000/dashboard
 ```
 
 From first line to production. No noise, just flow.
