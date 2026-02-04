@@ -8,7 +8,7 @@
 [![Deploy Zen-Dashboard](https://github.com/kiurakku/ZenFlare/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/kiurakku/ZenFlare/actions/workflows/deploy-pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-> CI і Deploy‑воркфлови відображаються через бейджі вище; їхній колір показує поточний статус (зелений = усе ок, червоний = останній ран упав, дивись вкладку Actions).
+> The CI and Deploy workflows are reflected by the badges above; their color shows the latest status (green = passing, red = last run failed — see the Actions tab for details).
 
 **The single Cloud platform for "Full calm"**
 
@@ -81,6 +81,7 @@ pnpm build
 pnpm test
 ```
 
+- **End‑to‑end quickstart gist:** [`zenflare-quickstart.md`](https://gist.github.com/kiurakku/9824aca4744cad1093583899dbbbb9ce) — minimal end‑to‑end instructions (clone, IDE extension, Deploy, Observability).
 - **IDE Extension:** Open repo in VS Code, press **F5** (Run → Run ZenFlare Extension) or run from `.vscode/launch.json`.
 - **Deploy API:** `cd packages/deploy && pnpm start` (port 4000).
 - **Observability + Zen-Dashboard:** `cd packages/observability && pnpm start` (port 5000, `/dashboard`).
