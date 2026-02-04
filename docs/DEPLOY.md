@@ -40,4 +40,18 @@ cd packages/observability && pnpm start
 # http://localhost:5000/dashboard
 ```
 
+## Docker / containers
+
+For a containerized local setup you can use the provided Dockerfiles and `docker-compose.yml`:
+
+```bash
+# Build and start Deploy + Observability
+docker-compose up --build
+
+# Deploy API: http://localhost:4000
+# Observability + Zen-Dashboard: http://localhost:5000/dashboard
+```
+
+Both services expose `/health` and `/healthz` endpoints and log JSON lines to stdout (timestamp, service name, message, extra fields) which can be collected by any log aggregation system.
+
 From first line to production. No noise, just flow.

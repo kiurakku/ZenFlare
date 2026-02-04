@@ -4,12 +4,27 @@
  * From first line to production. No noise, just flow.
  */
 
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import path from "path";
 import { detectFramework, getBuildPlan } from "./detect";
 
 const app = express();
 app.use(express.json());
+
+function log(message: string, extra?: Record<string, unknown>) {
+  const payload = {
+    ts: new Date().toISOString(),
+    service: "zenflare-deploy",
+    message,
+    ...extra,
+  };
+  console.log(JSON.stringify(payload));
+}
+
+app.use((req: Request, _res: Response, next: NextFunction) => {
+  log("http_request", { method: req.method, path: req.path });
+  next();
+});
 
 const PORT = process.env.PORT || 4000;
 
@@ -53,6 +68,9 @@ function createJob(repo?: string, branch?: string): DeployJob {
 }
 
 app.get("/health", (_req: Request, res: Response) => {
+  res.json({ status: "ok", service: "zenflare-deploy" });
+});
+app.get("/healthz", (_req: Request, res: Response) => {
   res.json({ status: "ok", service: "zenflare-deploy" });
 });
 
@@ -118,5 +136,5 @@ app.get("/api/deploy/:jobId", (req: Request, res: Response) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`ZenFlare Deploy listening on port ${PORT}`);
+  log("service_started", { port: PORT });
 });

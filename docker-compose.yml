@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  deploy:
+    build:
+      context: .
+      dockerfile: packages/deploy/Dockerfile
+    container_name: zenflare-deploy
+    ports:
+      - "4000:4000"
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "-", "http://localhost:4000/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  observability:
+    build:
+      context: .
+      dockerfile: packages/observability/Dockerfile
+    container_name: zenflare-observability
+    ports:
+      - "5000:5000"
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "-", "http://localhost:5000/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+

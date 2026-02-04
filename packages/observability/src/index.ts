@@ -4,11 +4,26 @@
  * From first line to production. No noise, just flow.
  */
 
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import path from "path";
 
 const app = express();
 app.use(express.json());
+
+function log(message: string, extra?: Record<string, unknown>) {
+  const payload = {
+    ts: new Date().toISOString(),
+    service: "zenflare-observability",
+    message,
+    ...extra,
+  };
+  console.log(JSON.stringify(payload));
+}
+
+app.use((req: Request, _res: Response, next: NextFunction) => {
+  log("http_request", { method: req.method, path: req.path });
+  next();
+});
 
 const PORT = process.env.PORT || 5000;
 
@@ -58,6 +73,9 @@ function statusFromLevel(level: "info" | "warn" | "error"): Status {
 }
 
 app.get("/health", (_req: Request, res: Response) => {
+  res.json({ status: "ok", service: "zenflare-observability" });
+});
+app.get("/healthz", (_req: Request, res: Response) => {
   res.json({ status: "ok", service: "zenflare-observability" });
 });
 
@@ -196,6 +214,8 @@ app.get("/dashboard", (_req: Request, res: Response) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`ZenFlare Observability listening on port ${PORT}`);
-  console.log(`Zen-Dashboard: http://localhost:${PORT}/dashboard`);
+  log("service_started", {
+    port: PORT,
+    dashboardUrl: `http://localhost:${PORT}/dashboard`,
+  });
 });

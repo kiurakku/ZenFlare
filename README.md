@@ -87,6 +87,16 @@ pnpm test
 - **Observability + Zen-Dashboard:** `cd packages/observability && pnpm start` (port 5000, `/dashboard`).
 - **Tests:** `pnpm test` runs unit tests for `ide-extension` (complexity) and `deploy` (framework detection). See [docs/TESTING.md](docs/TESTING.md).
 
+### Docker / containers
+
+```bash
+docker-compose up --build
+```
+
+- Deploy API: `http://localhost:4000` (health: `/health`, `/healthz`).
+- Observability + Zen-Dashboard: `http://localhost:5000/dashboard` (health: `/health`, `/healthz`).
+- Both services emit structured JSON logs to stdout, suitable for ingestion by log collectors.
+
 **Site** (landing + Zen-Dashboard) is deployed to **GitHub Pages** on every push to `main`: landing with logo, banners (`bg1`, `Bg+logo`, `phone+logo`), video (`vid/phone+logo.mp4`), and Zen-Dashboard (waves + breathing flames). Enable Pages in **Settings → Pages → Source: GitHub Actions**. Live: `https://<user>.github.io/ZenFlare/`.
 
 ---
