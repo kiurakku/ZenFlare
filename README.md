@@ -73,6 +73,7 @@ After deploy, the real value kicks in. Instead of a flood of “Error 500” —
 git clone https://github.com/kiurakku/ZenFlare.git
 cd ZenFlare
 
+# Ensure you use pnpm from package.json (pnpm@9) and Node >= 18
 pnpm install
 pnpm build
 pnpm test

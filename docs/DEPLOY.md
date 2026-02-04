@@ -10,14 +10,18 @@
 
 - **Workflow:** [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)
 - **Triggers:** Push and pull requests to `main` / `master`
-- **Steps:** Checkout → pnpm 9 → Node 20 → `pnpm install` → `pnpm build`
+- **Steps:** Checkout → pnpm (версія з `packageManager` у `package.json`) → Node 20 → `pnpm install` → `pnpm build` → `pnpm test`
 - **Badge:** [![CI](https://github.com/kiurakku/ZenFlare/actions/workflows/ci.yml/badge.svg)](https://github.com/kiurakku/ZenFlare/actions/workflows/ci.yml)
 
 ## Deploy Zen-Dashboard to GitHub Pages
 
 - **Workflow:** [`.github/workflows/deploy-pages.yml`](../.github/workflows/deploy-pages.yml)
 - **Triggers:** Push to `main`, or manual `workflow_dispatch`
-- **Artifact:** `packages/observability/dashboard` (static HTML/CSS/JS)
+- **Artifact:** вміст директорії `build/`, куди збираються:
+  - `site/index.html` та `site/404.html` (лендінг);
+  - `packages/observability/dashboard/` (Zen-Dashboard);
+  - `src/public/` → `build/assets/` (лого, банери, відео);
+  - `assets/icons/` → `build/assets/icons/` (favicon, flare-іконки).
 - **Enable Pages:** Repo **Settings → Pages → Build and deployment → Source:** **GitHub Actions**
 - **URL:** `https://<username>.github.io/ZenFlare/` (replace `<username>` with your GitHub user or org)
 
