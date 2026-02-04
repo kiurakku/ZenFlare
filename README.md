@@ -8,6 +8,8 @@
 [![Deploy Zen-Dashboard](https://github.com/kiurakku/ZenFlare/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/kiurakku/ZenFlare/actions/workflows/deploy-pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
+> CI і Deploy‑воркфлови відображаються через бейджі вище; їхній колір показує поточний статус (зелений = усе ок, червоний = останній ран упав, дивись вкладку Actions).
+
 **The single Cloud platform for "Full calm"**
 
 > **ZenFlare: From the first line to production. No noise, just flow.**  
