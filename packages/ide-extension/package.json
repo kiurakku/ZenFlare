@@ -12,10 +12,13 @@
     "test": "tsc && node --test out/complexity.test.js"
   },
   "engines": {
-    "vscode": "^1.85.0"
+   "vscode": "^1.85.0"
   },
   "categories": ["Other"],
-  "activationEvents": ["onStartupFinished"],
+  "activationEvents": [
+    "onCommand:zenflare.toggleZenZone",
+    "onCommand:zenflare.showFlare"
+  ],
   "contributes": {
     "commands": [
       { "command": "zenflare.toggleZenZone", "title": "ZenFlare: Toggle Zen Zone" },
