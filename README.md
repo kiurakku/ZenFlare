@@ -1,136 +1,93 @@
-<p align="center">
-  <img src="src/public/logo.png" alt="ZenFlare" width="160" height="160" />
-</p>
-
 # ZenFlare
 
-[![CI](https://github.com/kiurakku/ZenFlare/actions/workflows/ci.yml/badge.svg)](https://github.com/kiurakku/ZenFlare/actions/workflows/ci.yml)
-[![Deploy Zen-Dashboard](https://github.com/kiurakku/ZenFlare/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/kiurakku/ZenFlare/actions/workflows/deploy-pages.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![Repo Visibility](https://img.shields.io/badge/visibility-Public-blue)
+![Repository Type](https://img.shields.io/badge/type-Source-lightgrey)
+![Last Commit](https://img.shields.io/github/last-commit/kiurakku/ZenFlare)
+![Issues](https://img.shields.io/github/issues/kiurakku/ZenFlare)
+![License](https://img.shields.io/github/license/kiurakku/ZenFlare)
 
-> The CI and Deploy workflows are reflected by the badges above; their color shows the latest status (green = passing, red = last run failed — see the Actions tab for details).
+TypeScript developer platform prototype for IDE workflow, deploy automation, and observability.
 
-**The single Cloud platform for "Full calm"**
+## Project Overview
 
-> **ZenFlare: From the first line to production. No noise, just flow.**  
-> You start in the IDE; one push takes you live; one message tells you when something breaks — one continuous flow, no tool overload.
+$(@{defaultBranchRef=; description=TypeScript developer platform prototype for IDE workflow, deploy automation, and observability.; isFork=False; isPrivate=False; licenseInfo=; name=ZenFlare; primaryLanguage=; repositoryTopics=System.Object[]; visibility=PUBLIC}.name) is maintained as a **TypeScript** project focused on reliable engineering practices, readable architecture, and practical delivery.
 
-[Full slogan & taglines →](docs/SLOGAN.md)
+## Tags
 
----
+engineering, software, automation
 
-ZenFlare is an **all-in-one** solution for developers: you don’t switch between tabs or drown in alerts and pipelines. You get a clean result in a calm, focused environment.
+## Why This Project
 
-Modern IT is overloaded: Jira, GitHub, Sentry, AWS, Slack… ZenFlare offers the opposite — **minimalism**. You get more than hosting; you get **developer peace of mind**.
+- Demonstrates production-minded implementation and maintainability.
+- Captures reusable patterns that can be applied across other systems.
+- Serves as a practical reference for development, operations, and quality workflows.
 
----
+## Key Capabilities
 
-## Three stages. One flow.
+- Clear repository structure for iterative development.
+- Standardized development lifecycle: setup, build, test, and deployment flow.
+- Continuous integration compatibility through GitHub Actions.
+- Documentation-first approach for onboarding and contribution speed.
 
-### 1. **ZenFlare IDE Extension** — Writing stage
+## Tech Context
 
-You write code in **VS Code** or **JetBrains**.
+- **Primary language:** TypeScript
+- **Visibility:** Public
+- **Repository role:** Source
+- **Default branch:** main
+- **License:** Other
 
-| What it does | What you see |
-|--------------|--------------|
-| **Zen zone** | The plugin doesn’t just underline errors. It dims all code except the function you’re working on — so nothing distracts. |
-| **Intelligent flare** | As soon as code gets complex (high cyclomatic complexity), a soft glow appears on the side. One click — and AI suggests a refactor so the code stays clean. |
+## Quick Start
 
-### 2. **ZenFlare Deploy** — Launch stage
-
-Code is ready. You **don’t** configure Dockerfiles or CI/CD pipelines.
-
-| What it does | What you see |
-|--------------|--------------|
-| **One click / one push** | From the IDE or via `git push`, the project goes straight to ZenFlare hosting. |
-| **Magic under the hood** | The system detects the framework, optimizes images and caching. You only see the “light pulse” animation — and the site is live. |
-
-### 3. **ZenFlare Observability** — Support stage
-
-After deploy, the real value kicks in. Instead of a flood of “Error 500” — one clear signal.
-
-| What it does | What you see |
-|--------------|--------------|
-| **One message instead of thousands of logs** | If something fails on the server, ZenFlare analyzes logs and sends **one** message to Slack/Telegram: *“Stay calm. The DB failed due to this request. Here’s a button to fix it.”* |
-| **Zen-Dashboard** | Server load isn’t chaotic graphs — it’s calm waves or “breathing” flames. Red flame = problem there. |
-
----
-
-## Stack and repository
-
-- [Architecture →](ARCHITECTURE.md) · [Plans & roadmap →](docs/PLANS.md) · [Branding & icons →](docs/BRANDING.md)
-
-| Component | Description |
-|-----------|-------------|
-| `packages/ide-extension` | VS Code / JetBrains extension (Zen zone, Flare, refactoring) |
-| `packages/deploy` | Deploy service: framework detection, optimization, hosting |
-| `packages/observability` | Log aggregation, alerts, Zen-Dashboard |
-
----
-
-## Quick start (in development)
-
-```bash
-# Clone
+`ash
 git clone https://github.com/kiurakku/ZenFlare.git
 cd ZenFlare
+# Install dependencies (project-specific)
+# Build or run tests
+# Start the project
+`
 
-# Ensure you use pnpm from package.json (pnpm@9) and Node >= 18
-pnpm install
-pnpm build
-pnpm test
-```
+## Configuration
 
-- **End‑to‑end quickstart gist:** [`zenflare-quickstart.md`](https://gist.github.com/kiurakku/9824aca4744cad1093583899dbbbb9ce) — minimal end‑to‑end instructions (clone, IDE extension, Deploy, Observability).
-- **IDE Extension:** Open repo in VS Code, press **F5** (Run → Run ZenFlare Extension) or run from `.vscode/launch.json`.
-- **Deploy API:** `cd packages/deploy && pnpm start` (port 4000).
-- **Observability + Zen-Dashboard:** `cd packages/observability && pnpm start` (port 5000, `/dashboard`).
-- **Tests:** `pnpm test` runs unit tests for `ide-extension` (complexity) and `deploy` (framework detection). See [docs/TESTING.md](docs/TESTING.md).
+- Use environment variables for secrets and environment-specific values.
+- Keep local configuration in non-committed files (for example: .env.local).
+- Prefer explicit defaults and fail-fast validation for required settings.
 
-### Docker / containers
+## Testing
 
-```bash
-docker-compose up --build
-```
+- Run unit/integration checks before each push.
+- Keep tests deterministic and scoped to behavior.
+- Add regression tests for every fixed defect.
 
-- Deploy API: `http://localhost:4000` (health: `/health`, `/healthz`).
-- Observability + Zen-Dashboard: `http://localhost:5000/dashboard` (health: `/health`, `/healthz`).
-- Both services emit structured JSON logs to stdout, suitable for ingestion by log collectors.
+## CI/CD
 
-**Site** (landing + Zen-Dashboard) is deployed to **GitHub Pages** on every push to `main`: landing with logo, banners (`bg1`, `Bg+logo`, `phone+logo`), video (`vid/phone+logo.mp4`), and Zen-Dashboard (waves + breathing flames). Enable Pages in **Settings → Pages → Source: GitHub Actions**. Live: `https://<user>.github.io/ZenFlare/`.
+This repository is designed to work with GitHub Actions pipelines for:
 
----
+- Build validation
+- Test execution
+- Baseline repository health checks
 
-## License and acknowledgments
+## Roadmap
 
-This project is distributed under the **[MIT License](LICENSE)**.
+- Strengthen automated quality gates and security checks.
+- Expand coverage of integration and end-to-end scenarios.
+- Improve observability, performance benchmarks, and release discipline.
 
-ZenFlare was created with inspiration from:
+## Contribution Guidelines
 
-- **Cloud9** — for the cloud-based IDE concept and quiet developer experience.
-- **The ARS7 team** — for their contribution to the architecture and vision of the “full calm” platform.
+- Open an issue describing the change or bug.
+- Submit focused pull requests with clear scope.
+- Include test evidence for behavioral changes.
 
-Details are in [LICENSE](LICENSE) and in [Credits](docs/CREDITS.md).
+## Security Notes
 
----
+- Do not commit credentials, tokens, or private keys.
+- Report sensitive findings privately via maintainer contact channels.
 
-## Contributing
+## License
 
-We welcome contributors. Before sending a PR:
+This project is distributed under **Other**.
 
-- read [CONTRIBUTING.md](CONTRIBUTING.md);
-- follow the [Code of Conduct](CODE_OF_CONDUCT.md);
-- for security issues — [SECURITY.md](SECURITY.md).
+## Maintainer
 
----
-
-## Contact
-
-- **Repository:** [github.com/kiurakku/ZenFlare](https://github.com/kiurakku/ZenFlare)
-- **Issues:** [GitHub Issues](https://github.com/kiurakku/ZenFlare/issues)
-
----
-
-<p align="center">
-  <strong>ZenFlare</strong> — one flow from code to production. No noise.
-</p>
+Maintained by **Kiurakku** as part of a portfolio of software engineering, security engineering, and platform projects.
